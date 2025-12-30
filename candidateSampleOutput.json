@@ -1,0 +1,239 @@
+{
+  "fresher": {
+    "candidate_id": "CAND67890",
+    "personal_info": {
+      "full_name": "Sneha Roy",
+      "email": "sneha.roy@example.com",
+      "phone": "+91-9988776655",
+      "date_of_birth": "2002-03-10",
+      "gender": "Female",
+      "linkedin": "https://linkedin.com/in/sneharoy",
+      "github": "https://github.com/sneharoy",
+      "address": {
+        "city": "Kolkata",
+        "state": "West Bengal",
+        "country": "India"
+      }
+    },
+    "education": [
+      {
+        "degree": "B.Sc",
+        "branch": "Computer Science",
+        "institute": "University of Calcutta",
+        "start_year": 2021,
+        "end_year": 2024,
+        "cgpa": 8.8
+      }
+    ],
+    "experience": [],
+    "skills": [
+      "Python",
+      "HTML",
+      "CSS",
+      "MySQL"
+    ],
+    "certifications": [],
+    "projects": [
+      {
+        "title": "Portfolio Website",
+        "description": "Created a responsive personal portfolio site.",
+        "tech_stack": [
+          "HTML",
+          "CSS",
+          "JavaScript"
+        ],
+        "link": "https://sneharoy.dev"
+      }
+    ],
+    "summary": "Computer science graduate skilled in web development and databases.",
+    "resume_file_link": "https://yourserver.com/resumes/sneha_roy_resume.pdf",
+    "parsed_successfully": true,
+    "placement_status": "Available"
+  },
+  "Experienced (non tech)": {
+    "candidate_id": "CAND54321",
+    "personal_info": {
+      "full_name": "Riya Malhotra",
+      "email": "riya.malhotra@example.com",
+      "phone": "+91-9811122233",
+      "gender": "Female",
+      "linkedin": "https://linkedin.com/in/riyamalhotra",
+      "address": {
+        "city": "Mumbai",
+        "state": "Maharashtra",
+        "country": "India"
+      }
+    },
+    "education": [
+      {
+        "degree": "MBA",
+        "branch": "Marketing",
+        "institute": "NMIMS Mumbai",
+        "start_year": 2021,
+        "end_year": 2023,
+        "cgpa": 7.8
+      },
+      {
+        "degree": "B.Com",
+        "branch": "Finance",
+        "institute": "University of Mumbai",
+        "start_year": 2018,
+        "end_year": 2021,
+        "cgpa": 8.0
+      }
+    ],
+    "experience": [
+      {
+        "job_title": "Sales Intern",
+        "company": "FMCG Corp",
+        "start_date": "2022-05-01",
+        "end_date": "2022-08-31",
+        "is_current": false,
+        "location": "Mumbai",
+        "description": "Assisted in B2B sales strategy and lead generation using CRM tools."
+      }
+    ],
+    "skills": [
+      "Salesforce",
+      "Negotiation",
+      "Communication",
+      "CRM",
+      "MS Excel"
+    ],
+    "certifications": [
+      {
+        "title": "Digital Marketing Basics",
+        "issuer": "Google",
+        "date": "2022-07-10"
+      }
+    ],
+    "projects": [
+      {
+        "title": "Market Research Project",
+        "description": "Conducted consumer behavior analysis for a new beverage launch.",
+        "tech_stack": [],
+        "link": null
+      }
+    ],
+    "summary": "MBA marketing graduate with a strong interest in B2B sales, CRM systems, and customer engagement.",
+    "resume_file_link": "https://yourserver.com/resumes/riya_malhotra_resume.pdf",
+    "parsed_successfully": true,
+    "placement_status": "Available"
+  },
+  "Experienced": {
+    "candidate_id": "CAND12345",
+    "personal_info": {
+      "full_name": "Amit Kumar",
+      "email": "amit.kumar@example.com",
+      "phone": "+91-9876543210",
+      "date_of_birth": "2000-08-20",
+      "gender": "Male",
+      "linkedin": "https://linkedin.com/in/amitkumar",
+      "github": "https://github.com/amitkumar",
+      "portfolio": "https://amitk.dev",
+      "address": {
+        "street": "22/B Nehru Road",
+        "city": "Bangalore",
+        "state": "Karnataka",
+        "country": "India",
+        "postal_code": "560001"
+      }
+    },
+    "education": [
+      {
+        "degree": "B.Tech",
+        "branch": "Computer Science",
+        "institute": "IIT Delhi",
+        "start_year": 2019,
+        "end_year": 2023,
+        "cgpa": 8.7
+      },
+      {
+        "degree": "12th Grade",
+        "board": "CBSE",
+        "school": "Delhi Public School",
+        "year": 2019,
+        "percentage": 92.5
+      }
+    ],
+    "experience": [
+      {
+        "job_title": "Software Engineer",
+        "company": "Infosys",
+        "start_date": "2023-08-01",
+        "end_date": null,
+        "is_current": true,
+        "location": "Bangalore, India",
+        "description": "Working in the cloud team focusing on serverless applications with Azure and AWS."
+      },
+      {
+        "job_title": "Backend Developer Intern",
+        "company": "StartupHub",
+        "start_date": "2022-06-01",
+        "end_date": "2022-09-30",
+        "is_current": false,
+        "location": "Remote",
+        "description": "Developed REST APIs using Django and integrated PostgreSQL."
+      }
+    ],
+    "skills": [
+      "Python",
+      "Django",
+      "JavaScript",
+      "React",
+      "AWS",
+      "Git",
+      "SQL"
+    ],
+    "certifications": [
+      {
+        "title": "AWS Certified Developer - Associate",
+        "issuer": "Amazon Web Services",
+        "date": "2023-05-15",
+        "credential_url": "https://aws.amazon.com/certification/verify"
+      },
+      {
+        "title": "Machine Learning",
+        "issuer": "Coursera (Stanford University)",
+        "date": "2022-11-20"
+      }
+    ],
+    "projects": [
+      {
+        "title": "Smart Resume Parser",
+        "description": "Built an NLP-based resume parser using Python and spaCy to extract structured information from PDF resumes.",
+        "tech_stack": [
+          "Python",
+          "spaCy",
+          "Flask"
+        ],
+        "link": "https://github.com/amitkumar/resume-parser"
+      },
+      {
+        "title": "College Connect Platform",
+        "description": "Developed a platform for students to connect and share academic resources.",
+        "tech_stack": [
+          "React",
+          "Node.js",
+          "MongoDB"
+        ],
+        "link": null
+      }
+    ],
+    "summary": "A passionate software engineer with strong foundations in backend development, cloud technologies, and data structures.",
+    "languages": [
+      "English",
+      "Hindi"
+    ],
+    "hobbies": [
+      "Chess",
+      "Blogging",
+      "Hackathons"
+    ],
+    "resume_file_link": "https://yourserver.com/resumes/amit_kumar_resume.pdf",
+    "profile_picture_link": "https://yourserver.com/photos/amit_kumar.jpg",
+    "placement_status": "Available",
+    "upload_timestamp": "2025-05-14T11:22:00Z",
+    "parsed_successfully": true
+  }
+}

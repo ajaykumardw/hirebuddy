@@ -1,0 +1,121 @@
+{
+  "full_name": "Amit Kumar",
+  "email": "amit.kumar@example.com",
+  "mobil_no": "+91-9876543210",
+  "date_of_birth": "2000-08-20",
+  "gender": "Male",
+  "linkedin_url": "https://linkedin.com/in/amitkumar",
+  "github_url": "https://github.com/amitkumar",
+  "portfolio_url": "https://amitk.dev",
+  "city": "Bangalore",
+  "state": "Karnataka",
+  "latest_company_name": null,
+  "sector": null,
+  "department": null,
+  "key_responsibilities": null,
+  "exp": [
+    "0-1",
+    "1-2",
+    "2-5",
+    "5-10",
+    "10-15",
+    "15-20",
+    "20-25",
+    "25-30",
+    "30+"
+  ],
+  "education": [
+    {
+      "degree": "B.Tech",
+      "branch_or_board": "Computer Science",
+      "school_or_institute": "IIT Delhi",
+      "passing_year": 2023,
+      "grade_type": "cgpa",
+      "grade_value": 8.7
+    },
+    {
+      "degree": "12th Grade",
+      "branch_or_board": "CBSE",
+      "school_or_institute": "Delhi Public School",
+      "passing_year": 2019,
+      "grade_type": "percentage",
+      "grade_value": 92.5
+    }
+  ],
+  "total_experience": "1.5",
+  "current_ctc": null,
+  "experience": [
+    {
+      "job_title": "Software Engineer",
+      "company": "Infosys",
+      "start_date": "2023-08-01",
+      "end_date": null,
+      "is_current": true,
+      "location": "Bangalore, India"
+    },
+    {
+      "job_title": "Backend Developer Intern",
+      "company": "StartupHub",
+      "start_date": "2022-06-01",
+      "end_date": "2022-09-30",
+      "is_current": false,
+      "location": "Remote"
+    }
+  ],
+  "skills": [
+    "Python",
+    "Django",
+    "JavaScript",
+    "React",
+    "AWS",
+    "Git",
+    "SQL"
+  ],
+  "languages": [
+    "English",
+    "Hindi"
+  ],
+  "hobbies": [
+    "Chess",
+    "Blogging",
+    "Hackathons"
+  ],
+  "certifications": [
+    {
+      "title": "AWS Certified Developer - Associate",
+      "issuer": "Amazon Web Services",
+      "date": "2023-05-15",
+      "credential_url": "https://aws.amazon.com/certification/verify"
+    },
+    {
+      "title": "Machine Learning",
+      "issuer": "Coursera (Stanford University)",
+      "date": "2022-11-20",
+      "credential_url": null
+    }
+  ],
+  "projects": [
+    {
+      "title": "Smart Resume Parser",
+      "description": "Built an NLP-based resume parser using Python and spaCy to extract structured information from PDF resumes.",
+      "tech_stack": [
+        "Python",
+        "spaCy",
+        "Flask"
+      ],
+      "link": "https://github.com/amitkumar/resume-parser"
+    },
+    {
+      "title": "College Connect Platform",
+      "description": "Developed a platform for students to connect and share academic resources.",
+      "tech_stack": [
+        "React",
+        "Node.js",
+        "MongoDB"
+      ],
+      "link": null
+    }
+  ],
+  "summary": "A passionate software engineer with strong foundations in backend development, cloud technologies, and data structures."
+
+}
