@@ -16,7 +16,7 @@ const nextConfig = {
         locale: false
       },
       {
-        source: '/:path((?!en|fr|ar|front-pages|favicon\\.ico).*)',
+        source: '/:path((?!en|fr|ar|images|front-pages|favicon\\.ico).*)',
         destination: '/en/:path',
         permanent: true,
         locale: false
