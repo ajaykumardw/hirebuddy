@@ -360,7 +360,7 @@ const AddCandidateForm = ({candidateId, candiData}) => {
 
           if(!matched){
             matched = industries ? industries.find(industry =>
-              industry?.name?.toLowerCase().includes(candidateData?.industry?.trim()?.toLowerCase() || '')
+              industry?.name?.toLowerCase().includes(candidateData?.industry?.trim()?.toLowerCase() || 'any')
             ) : '';
           }
 
@@ -383,7 +383,7 @@ const AddCandidateForm = ({candidateId, candiData}) => {
 
           if(!matched){
             matched = departments ? departments.find(department =>
-              department?.name?.toLowerCase().includes(candidateData?.department?.name?.trim()?.toLowerCase() || '')
+              department?.name?.toLowerCase().includes(candidateData?.department?.name?.trim()?.toLowerCase() || 'other')
             ) : '';
           }
 
@@ -398,7 +398,7 @@ const AddCandidateForm = ({candidateId, candiData}) => {
 
           if(!matched){
             matched = cities ? cities.find(city =>
-              city?.name?.toLowerCase().includes(candidateData?.city?.city_name?.trim()?.toLowerCase() || '')
+              city?.city_name?.toLowerCase().includes(candidateData?.city?.trim()?.toLowerCase() || 'Anywhere in India')
             ) : '';
           }
 
