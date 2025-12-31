@@ -28,6 +28,8 @@ export const authOptions = {
          */
         const { email, password, isCandidate, jobApply } = credentials
 
+        console.log("fontend login start: ");
+
         try {
           // ** Login API Call to match the user credentials and receive user data in response along with his role
           const res = await fetch(`${process.env.API_URL}/login`, {
@@ -39,12 +41,15 @@ export const authOptions = {
           })
 
           const data = await res.json()
+          console.log("data from login: ", data);
 
           if (res.status === 401) {
+            console.log("401 error from login: ", res);
             throw new Error(JSON.stringify(data))
           }
 
           if (res.status === 403) {
+            console.log("403 error from login: ", res);
             throw new Error(JSON.stringify(data))
           }
 
