@@ -383,7 +383,7 @@ const AddCandidateForm = ({candidateId, candiData}) => {
 
           if(!matched){
             matched = departments ? departments.find(department =>
-              department?.name?.toLowerCase().includes(candidateData?.department?.name?.trim()?.toLowerCase() || 'other')
+              department?.name?.toLowerCase().includes(candidateData?.department?.trim()?.toLowerCase() || 'other')
             ) : '';
           }
 
