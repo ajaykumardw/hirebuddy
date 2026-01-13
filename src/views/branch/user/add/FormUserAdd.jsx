@@ -470,7 +470,7 @@ const FormUserAdd = ({ statesData, designations, reportingManagers, userData }) 
                                         value={reportingManagers && reportingManagers.find(reporting => reporting.id === field.value) || null}
                                         options={reportingManagers || []}
                                         getOptionKey={option => option.id}
-                                        getOptionLabel={(reporting) => reporting.first_name + " " + reporting.last_name  || ''}
+                                        getOptionLabel={(reporting) => reporting.first_name + " " + reporting.last_name + (reporting.designation ? " (" + reporting.designation.name + ")" : '')}
                                         onChange={(event, value) => {
                                             field.onChange(value?.id || '')
                                         }}
