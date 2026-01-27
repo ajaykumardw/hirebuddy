@@ -460,7 +460,6 @@ const FormUserAdd = ({ statesData, designations, reportingManagers, userData }) 
 
                         <Grid size={{ xs: 12, sm: 6 }}>
                             <Controller name="reportingManager" control={control}
-                                rules={{ required: 'This field is required.' }}
                                 render={({ field }) => (
                                     <Autocomplete
                                         fullWidth
@@ -470,14 +469,14 @@ const FormUserAdd = ({ statesData, designations, reportingManagers, userData }) 
                                         value={reportingManagers && reportingManagers.find(reporting => reporting.id === field.value) || null}
                                         options={reportingManagers || []}
                                         getOptionKey={option => option.id}
-                                        getOptionLabel={(reporting) => reporting.first_name + " " + reporting.last_name + (reporting.designation ? " (" + reporting.designation.name + ")" : '')}
+                                        getOptionLabel={(reporting) => reporting.first_name + (reporting.last_name ? " " + reporting.last_name : " ") + (reporting.designation ? " (" + reporting.designation.name + ")" : '')}
                                         onChange={(event, value) => {
                                             field.onChange(value?.id || '')
                                         }}
                                         renderInput={(params) => (
                                             <CustomTextField
                                                 {...params}
-                                                label={<>Reporting Manager <span className='text-error'>*</span></>}
+                                                label={<>Reporting Manager</>}
                                                 error={!!errors.reportingManager}
                                                 helperText={errors?.reportingManager?.message}
                                             />
