@@ -61,41 +61,34 @@ const defaultValues = {
     city: '',
     address: '',
     pincode: '',
-    alternateEmail: '',
-    alternatePhone: '',
     reportingManager: '',
     note: '',
     profileImage: ''
 }
 
-const FormUserAdd = ({ statesData, designations, reportingManagers, userData }) => {
+const FormUserAdd = ({ statesData, designations, reportingManagers, userId, userData }) => {
     // States
     const [formData, setFormData] = useState({
-        username: '',
-        email: '',
-        password: '',
-        isPasswordShown: false,
-        confirmPassword: '',
-        isConfirmPasswordShown: false,
-        firstName: '',
-        lastName: '',
-        country: '',
-        pfNo: '',
-        branch: '',
-        division: '',
-        designation: '',
-        station: '',
-        checkingAuthority: '',
-        taSrNo: '',
-        incentiveAmt: '',
-        incentivePercentage: '',
-        payBand: '',
-        gPay: '',
-        firstClassDutyPassNo: '',
-        fatherName: '',
-        language: [],
-        date: null,
-        phoneNumber: ''
+      username: '',
+      email: '',
+      password: '',
+      password_confirmation: '',
+      loginValidUpto: null,
+      status: '1',
+      firstName: '',
+      lastName: '',
+      mobileNumber: '',
+      employeeCode: '',
+      dateOfBirth: null,
+      dateOfJoining: null,
+      reportingManager: '',
+      designation: '',
+      state: '',
+      city: '',
+      address: '',
+      pincode: '',
+      note: '',
+      profileImage: ''
     })
 
     // const [data, setData] = useState();
@@ -115,7 +108,30 @@ const FormUserAdd = ({ statesData, designations, reportingManagers, userData }) 
 
     useEffect(() => {
 
-    }, [userData])
+      if(userId && token) {
+
+        const fetchUser = async () => {
+          const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/branch/users/${userId}/edit`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+            }
+          });
+
+          if (res.status === 200) {
+
+            const data = await res.json();
+            setFormData(data.user);
+          } else {
+            setFormData(null);
+          }
+        }
+
+        fetchUser();
+      }
+
+    }, [userId, token])
 
 
 
@@ -156,36 +172,31 @@ const FormUserAdd = ({ statesData, designations, reportingManagers, userData }) 
 
     const handleReset = () => {
         setFormData({
-            username: '',
-            email: '',
-            password: '',
-            isPasswordShown: false,
-            confirmPassword: '',
-            isConfirmPasswordShown: false,
-            firstName: '',
-            lastName: '',
-            country: '',
-            pfNo: '',
-            gender: '',
-            branch: '',
-            division: '',
-            designation: '',
-            station: '',
-            checkingAuthority: '',
-            taSrNo: '',
-            incentiveAmt: '',
-            incentivePercentage: '',
-            payBand: '',
-            gPay: '',
-            firstClassDutyPassNo: '',
-            fatherName: '',
-            language: [],
-            dateOfBirth: null,
-            dateOfJoining: null,
-            loginValidUpto: null,
-            phoneNumber: ''
+          username: '',
+          email: '',
+          password: '',
+          password_confirmation: '',
+          loginValidUpto: null,
+          status: '1',
+          firstName: '',
+          lastName: '',
+          mobileNumber: '',
+          employeeCode: '',
+          dateOfBirth: null,
+          dateOfJoining: null,
+          reportingManager: '',
+          designation: '',
+          state: '',
+          city: '',
+          address: '',
+          pincode: '',
+          reportingManager: '',
+          note: '',
+          profileImage: ''
         })
     }
+
+    console.log("user data", formData)
 
     const {
         control,
@@ -194,7 +205,30 @@ const FormUserAdd = ({ statesData, designations, reportingManagers, userData }) 
         setError,
         watch,
         formState: { errors }
-    } = useForm({ defaultValues })
+    } = useForm({
+      values: formData ? {
+        username: formData.username || '',
+        email: formData.email || '',
+        password: '',
+        password_confirmation: '',
+        loginValidUpto: formData.expiry_date ? new Date(formData.expiry_date) : null,
+        status: formData.status.toString() || '1',
+        firstName: formData.first_name || '',
+        lastName: formData.last_name || '',
+        mobileNumber: formData.mobile_no || '',
+        employeeCode: formData.employee_code || '',
+        dateOfBirth: formData.date_of_birth ? new Date(formData.date_of_birth) : null,
+        dateOfJoining: formData.date_of_joining ? new Date(formData.date_of_joining) : null,
+        reportingManager: formData.reporting_manager_id || '',
+        designation: formData.designation_id || '',
+        state: formData.state_id || '',
+        city: formData.city_id || '',
+        address: formData.address || '',
+        pincode: formData.pincode || '',
+        note: formData.note || '',
+        profileImage: ''
+      } : defaultValues
+    })
 
     const onSubmit = async (data) => {
 
@@ -216,6 +250,46 @@ const FormUserAdd = ({ statesData, designations, reportingManagers, userData }) 
         // const token = await getCookie('token');
 
         if (token) {
+
+          if (userId) {
+
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/branch/users/${userId}`, {
+                method: 'post',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+                body: formData
+            });
+
+            const result = await res.json();
+
+            if (res.ok) {
+
+                sessionStorage.setItem('success', result.message);
+
+                router.push('/branch/user/list');
+
+                reset();
+
+
+            } else if (res.status == 422) {
+
+                // Laravel returns validation errors in the `errors` object
+                Object.entries(result.errors).forEach(([field, messages]) => {
+                    setError(field, {
+                        type: 'manual',
+                        message: messages[0], // Use the first error message for each field
+                    });
+                });
+
+            } else {
+                sessionStorage.setItem('error', result.message);
+
+                router.push('/branch/user/list');
+
+            }
+
+          } else {
 
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/branch/users/store`, {
                 method: 'post',
@@ -252,6 +326,7 @@ const FormUserAdd = ({ statesData, designations, reportingManagers, userData }) 
                 router.push('/branch/user/list');
 
             }
+          }
         }
     }
 
@@ -317,7 +392,8 @@ const FormUserAdd = ({ statesData, designations, reportingManagers, userData }) 
     }
 
     const selectedState = watch('state');
-    const selectedDepartment = watch('department');
+
+    // const selectedDepartment = watch('department');
 
     return (
         <Card>
@@ -362,50 +438,52 @@ const FormUserAdd = ({ statesData, designations, reportingManagers, userData }) 
                                 )} />
                         </Grid>
 
-                        {/* Password */}
-                        <Grid size={{ xs: 12, sm: 6 }}>
-                            <Controller name="password" control={control}
-                                rules={{ required: 'This field is required.' }}
-                                render={({ field }) => (
-                                    <CustomTextField fullWidth label={<>Password <span className='text-error'>*</span></>} required={false} placeholder="••••••••"
-                                        type={showPassword ? 'text' : 'password'}
-                                        error={!!errors.password} helperText={errors.password?.message}
-                                        InputProps={{
-                                            endAdornment: (
-                                                <InputAdornment position="end">
-                                                    <IconButton onClick={() => setShowPassword(p => !p)}>
-                                                        <i className={showPassword ? 'tabler-eye-off' : 'tabler-eye'} />
-                                                    </IconButton>
-                                                </InputAdornment>
-                                            )
-                                        }}
-                                        {...field} />
-                                )} />
-                        </Grid>
+                        {!userId && (
+                          <>
+                          <Grid size={{ xs: 12, sm: 6 }}>
+                              <Controller name="password" control={control}
+                                  rules={{ required: 'This field is required.' }}
+                                  render={({ field }) => (
+                                      <CustomTextField fullWidth label={<>Password <span className='text-error'>*</span></>} required={false} placeholder="••••••••"
+                                          type={showPassword ? 'text' : 'password'}
+                                          error={!!errors.password} helperText={errors.password?.message}
+                                          InputProps={{
+                                              endAdornment: (
+                                                  <InputAdornment position="end">
+                                                      <IconButton onClick={() => setShowPassword(p => !p)}>
+                                                          <i className={showPassword ? 'tabler-eye-off' : 'tabler-eye'} />
+                                                      </IconButton>
+                                                  </InputAdornment>
+                                              )
+                                          }}
+                                          {...field} />
+                                  )} />
+                          </Grid>
 
-                        {/* Confirm Password */}
-                        <Grid size={{ xs: 12, sm: 6 }}>
-                            <Controller name="password_confirmation" control={control}
-                                rules={{
-                                    required: 'This field is required.',
-                                    validate: value => value === password || 'Passwords do not match'
-                                }}
-                                render={({ field }) => (
-                                    <CustomTextField fullWidth label={<>Confirm Password <span className='text-error'>*</span></>} placeholder="••••••••"
-                                        type={showConfirmPassword ? 'text' : 'password'}
-                                        error={!!errors.password_confirmation} helperText={errors.password_confirmation?.message}
-                                        InputProps={{
-                                            endAdornment: (
-                                                <InputAdornment position="end">
-                                                    <IconButton onClick={() => setShowConfirmPassword(p => !p)}>
-                                                        <i className={showConfirmPassword ? 'tabler-eye-off' : 'tabler-eye'} />
-                                                    </IconButton>
-                                                </InputAdornment>
-                                            )
-                                        }}
-                                        {...field} />
-                                )} />
-                        </Grid>
+                          <Grid size={{ xs: 12, sm: 6 }}>
+                              <Controller name="password_confirmation" control={control}
+                                  rules={{
+                                      required: 'This field is required.',
+                                      validate: value => value === password || 'Passwords do not match'
+                                  }}
+                                  render={({ field }) => (
+                                      <CustomTextField fullWidth label={<>Confirm Password <span className='text-error'>*</span></>} placeholder="••••••••"
+                                          type={showConfirmPassword ? 'text' : 'password'}
+                                          error={!!errors.password_confirmation} helperText={errors.password_confirmation?.message}
+                                          InputProps={{
+                                              endAdornment: (
+                                                  <InputAdornment position="end">
+                                                      <IconButton onClick={() => setShowConfirmPassword(p => !p)}>
+                                                          <i className={showConfirmPassword ? 'tabler-eye-off' : 'tabler-eye'} />
+                                                      </IconButton>
+                                                  </InputAdornment>
+                                              )
+                                          }}
+                                          {...field} />
+                                  )} />
+                          </Grid>
+                          </>
+                        )}
 
                         <Grid size={{ xs: 12, sm: 6 }}>
                             <Controller name="loginValidUpto" control={control}
@@ -456,7 +534,7 @@ const FormUserAdd = ({ statesData, designations, reportingManagers, userData }) 
                         <Grid size={{ xs: 12 }}>
                             <Typography variant="body2" className="font-medium">2. User Info</Typography>
                         </Grid>
-                        
+
 
                         <Grid size={{ xs: 12, sm: 6 }}>
                             <Controller name="reportingManager" control={control}
@@ -564,7 +642,7 @@ const FormUserAdd = ({ statesData, designations, reportingManagers, userData }) 
                                 )} />
                         </Grid>
 
-                        <Grid size={{ xs: 12, sm: 6 }}>
+                        {/* <Grid size={{ xs: 12, sm: 6 }}>
                             <Controller name="alternateEmail" control={control}
                                 rules={{
                                     pattern: { value: /^[^@]+@[^@]+\.[^@]+$/, message: 'Invalid email' }
@@ -580,7 +658,7 @@ const FormUserAdd = ({ statesData, designations, reportingManagers, userData }) 
                                     <CustomTextField fullWidth required={false} label='Alternate Phone' type="number"
                                         error={!!errors.alternatePhone} helperText={errors.alternatePhone?.message} {...field} />
                                 )} />
-                        </Grid>
+                        </Grid> */}
                         {/* <Grid size={{ xs: 12, sm: 6 }}>
                             <Controller name="department" control={control}
                                 rules={{ required: 'This field is required.' }}
@@ -740,7 +818,7 @@ const FormUserAdd = ({ statesData, designations, reportingManagers, userData }) 
 
                         <Grid size={{ xs: 12 }}>
                             <div className='flex max-sm:flex-col items-center gap-6'>
-                                <img height={100} width={100} className='rounded' src={imgSrc} alt='Profile' />
+                                <img height={100} width={100} className='rounded object-contain' src={formData.profile_image ? process.env.NEXT_PUBLIC_ASSET_URL + formData.profile_image : imgSrc} alt='Profile' />
                                 <div className='flex flex-grow flex-col gap-4'>
                                     <div className='flex flex-col sm:flex-row gap-4'>
                                         <Controller
@@ -764,13 +842,15 @@ const FormUserAdd = ({ statesData, designations, reportingManagers, userData }) 
                                                 </>
                                             )}
                                             rules={{
-                                                required: 'This field is required',
+
+                                                // required: !formData.profile_image && 'This field is required',
+                                                
                                                 validate: (file) =>
                                                     !file || file.size < 800 * 1024 || 'Max file size is 800KB',
                                             }}
                                         />
                                     </div>
-                                    <Typography>Allowed JPG, GIF or PNG. Max size of 800K</Typography>
+                                    <Typography>Allowed JPG or PNG. Max size of 800K</Typography>
 
                                     {errors.profileImage && (
                                         <FormHelperText error>{errors.profileImage.message}</FormHelperText>

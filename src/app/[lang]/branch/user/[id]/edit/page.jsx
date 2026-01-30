@@ -67,26 +67,29 @@ const getData = async () => {
 
     return {
       states: statesData.states || [],
-      departments: allData?.departments || [],
+      designations: allData?.designations || [],
       reportingManagers: allData?.reportingManagers || []
     };
   } catch (error) {
     console.error('Error fetching data:', error);
 
-    return { states: [], departments: [], reportingManagers: [] };
+    return { states: [], designations: [], reportingManagers: [] };
   }
 };
 
-const EditUser = async () => {
+const EditUser = async ( props ) => {
 
   // const data = await getData();
 
-  const { states, departments, reportingManagers } = await getData();
+  const params = await props.params;
+  const userId = params.id;
+
+  const { states, designations, reportingManagers } = await getData();
 
   return (
     <Grid container spacing={6}>
       <Grid size={{ xs: 12 }}>
-        <FormUserAdd statesData={states} departments={departments} reportingManagers={reportingManagers} />
+        <FormUserAdd statesData={states} designations={designations} reportingManagers={reportingManagers} userId={userId} />
       </Grid>
     </Grid>
   )

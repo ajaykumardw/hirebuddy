@@ -50,6 +50,11 @@ const userVerticalMenuData = dictionary => [
     icon: 'tabler-mail',
     href: '/job-email-templates'
   },
+  {
+    label: 'My Team',
+    icon: 'tabler-users-group',
+    href: '/team'
+  }
 
   // {
   //   label: 'Reports',

@@ -39,7 +39,6 @@ import { toast } from 'react-toastify'
 
 // Component Imports
 import TableFilters from './TableFilters'
-import AddUserDrawer from './AddUserDrawer'
 import OptionMenu from '@core/components/option-menu'
 import TablePaginationComponent from '@components/TablePaginationComponent'
 import CustomTextField from '@core/components/mui/TextField'
@@ -51,7 +50,6 @@ import { getLocalizedUrl } from '@/utils/i18n'
 
 // Style Imports
 import tableStyles from '@core/styles/table.module.css'
-import ChangePasswordDialog from '@/components/ChangePasswordDialog'
 
 // import { getCookie } from '@/utils/cookies'
 // import { useSession } from 'next-auth/react'
@@ -111,15 +109,14 @@ const userStatusObj = {
 // Column Definitions
 const columnHelper = createColumnHelper()
 
-const UserListTable = ({userData}) => {
+const TeamListTable = ({userData}) => {
   // States
-  const [addUserOpen, setAddUserOpen] = useState(false)
   const [rowSelection, setRowSelection] = useState({})
   const [data, setData] = useState(...[userData])
   const [filteredData, setFilteredData] = useState(data)
   const [globalFilter, setGlobalFilter] = useState('')
-  const [openChangePassword, setOpenChangePassword] = useState(false);
-  const [selectedUserId, setSelectedUserId] = useState(null);
+
+  console.log("Data in TeamListTable:", data);
 
   // Hooks
   const { lang: locale } = useParams()
@@ -152,12 +149,6 @@ const UserListTable = ({userData}) => {
       setTimeout(runAfterMount, 0);
     });
   }, []);
-
-  const handleChangePassword = (id) => {
-    setOpenChangePassword(true);
-    setSelectedUserId(id);
-    console.log("Change password for user ID:", id);
-  }
 
   const columns = useMemo(
     () => [
@@ -198,40 +189,26 @@ const UserListTable = ({userData}) => {
         )
       }),
 
-      // columnHelper.accessor('role', {
-      //   header: 'Role',
+      // columnHelper.accessor('email', {
+      //   header: 'Email',
       //   cell: ({ row }) => (
-      //     <div className='flex items-center gap-2'>
-      //       <Icon
-      //         className={userRoleObj[row.original?.role].icon}
-      //         sx={{ color: `var(--mui-palette-${userRoleObj[row.original?.role].color}-main)` }}
-      //       />
-      //       <Typography className='capitalize' color='text.primary'>
-      //         {row.original?.role}
-      //       </Typography>
-      //     </div>
+      //     <Typography color='text.primary'>
+      //       {row.original?.email}
+      //     </Typography>
       //   )
       // }),
-      columnHelper.accessor('email', {
-        header: 'Email',
-        cell: ({ row }) => (
-          <Typography color='text.primary'>
-            {row.original?.email}
-          </Typography>
-        )
-      }),
       columnHelper.accessor('mobile_no', {
         header: 'Mobile No.',
         cell: ({ row }) => <Typography>{row.original?.mobile_no}</Typography>
       }),
-      columnHelper.accessor('department', {
-        header: 'Department',
-        cell: ({ row }) => (
-          <Typography className='capitalize' color='text.primary'>
-            {row.original?.department?.name}
-          </Typography>
-        )
-      }),
+      // columnHelper.accessor('department', {
+      //   header: 'Department',
+      //   cell: ({ row }) => (
+      //     <Typography className='capitalize' color='text.primary'>
+      //       {row.original?.department?.name}
+      //     </Typography>
+      //   )
+      // }),
 
       // columnHelper.accessor('division', {
       //   header: 'Division',
@@ -249,34 +226,34 @@ const UserListTable = ({userData}) => {
           </Typography>
         )
       }),
-      columnHelper.accessor('state', {
-        header: 'State',
-        cell: ({ row }) => (
-          <Typography className='capitalize' color='text.primary'>
-            {row.original?.state?.state_name}
-          </Typography>
-        )
-      }),
-      columnHelper.accessor('city', {
-        header: 'City',
-        cell: ({ row }) => (
-          <Typography className='capitalize' color='text.primary'>
-            {row.original?.city?.city_name}
-          </Typography>
-        )
-      }),
-      columnHelper.accessor('validUpto', {
-        header: 'Valid Up to',
-        cell: ({ row }) => (
-          <Typography className='capitalize' color='text.primary'>
-            {new Date(row.original?.expiry_date).toLocaleDateString('en-GB', {
-              day: '2-digit',
-              month: 'short',
-              year: 'numeric'
-            })}
-          </Typography>
-        )
-      }),
+      // columnHelper.accessor('state', {
+      //   header: 'State',
+      //   cell: ({ row }) => (
+      //     <Typography className='capitalize' color='text.primary'>
+      //       {row.original?.state?.state_name}
+      //     </Typography>
+      //   )
+      // }),
+      // columnHelper.accessor('city', {
+      //   header: 'City',
+      //   cell: ({ row }) => (
+      //     <Typography className='capitalize' color='text.primary'>
+      //       {row.original?.city?.city_name}
+      //     </Typography>
+      //   )
+      // }),
+      // columnHelper.accessor('validUpto', {
+      //   header: 'Valid Up to',
+      //   cell: ({ row }) => (
+      //     <Typography className='capitalize' color='text.primary'>
+      //       {new Date(row.original?.expiry_date).toLocaleDateString('en-GB', {
+      //         day: '2-digit',
+      //         month: 'short',
+      //         year: 'numeric'
+      //       })}
+      //     </Typography>
+      //   )
+      // }),
       columnHelper.accessor('status', {
         header: 'Status',
         cell: ({ row }) => (
@@ -290,32 +267,6 @@ const UserListTable = ({userData}) => {
             />
           </div>
         )
-      }),
-      columnHelper.accessor('action', {
-        header: 'Actions',
-        cell: ({ row }) => (
-          <OptionMenu
-            iconClassName='text-textSecondary'
-            options={[
-              {
-                text: 'Edit',
-                icon: 'tabler-edit',
-                menuItemProps: {
-                  component: Link,
-                  href: getLocalizedUrl(`/branch/user/${row.original.id}/edit`, locale)
-                },
-              },
-              {
-                text: 'Change Password',
-                icon: 'tabler-key',
-                menuItemProps: {
-                  onClick: () => handleChangePassword(row.original.id)
-                },
-              },
-            ]}
-          />
-        ),
-        enableSorting: false
       })
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -392,15 +343,6 @@ const UserListTable = ({userData}) => {
             >
               Export
             </Button> */}
-            <Link href={getLocalizedUrl('/branch/user/add', locale)}>
-              <Button
-                variant='contained'
-                startIcon={<i className='tabler-plus' />}
-                className='max-sm:is-full'
-              >
-                Add New User
-              </Button>
-            </Link>
           </div>
         </div>
         <div className='overflow-x-auto'>
@@ -468,15 +410,8 @@ const UserListTable = ({userData}) => {
           }}
         />
       </Card>
-      <AddUserDrawer
-        open={addUserOpen}
-        handleClose={() => setAddUserOpen(!addUserOpen)}
-        userData={data}
-        setData={setData}
-      />
-      <ChangePasswordDialog open={openChangePassword} onClose={() => {setOpenChangePassword(false); setSelectedUserId(null); }} userId={selectedUserId} />
     </>
   )
 }
 
-export default UserListTable
+export default TeamListTable

@@ -507,6 +507,7 @@ const FormCompanyAdd = ({statesData, branchId }) => {
                     <RadioGroup row {...field}>
                       <FormControlLabel value="Recruiter" control={<Radio />} label="Recruiter" />
                       <FormControlLabel value="Mobilizer" control={<Radio />} label="Mobilizer" />
+                      <FormControlLabel value="WFP" control={<Radio />} label="WFP" />
                       <FormControlLabel value="Both" control={<Radio />} label="Both" />
                     </RadioGroup>
                   )} />

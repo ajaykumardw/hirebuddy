@@ -6,7 +6,11 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
+<<<<<<< HEAD
     "start": "next start -p 3002",
+=======
+    "start": "next start -p 3003",
+>>>>>>> live/main
     "lint": "next lint",
     "lint:fix": "next lint --fix",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
