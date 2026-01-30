@@ -201,6 +201,7 @@ const TeamListTable = ({userData}) => {
         header: 'Mobile No.',
         cell: ({ row }) => <Typography>{row.original?.mobile_no}</Typography>
       }),
+      
       // columnHelper.accessor('department', {
       //   header: 'Department',
       //   cell: ({ row }) => (
@@ -226,6 +227,7 @@ const TeamListTable = ({userData}) => {
           </Typography>
         )
       }),
+
       // columnHelper.accessor('state', {
       //   header: 'State',
       //   cell: ({ row }) => (

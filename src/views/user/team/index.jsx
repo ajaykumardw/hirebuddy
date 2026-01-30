@@ -1,12 +1,17 @@
 "use client"
 
-import Grid from '@mui/material/Grid2'
-import TeamListTable from './TeamListTable'
 import { useEffect, useState } from 'react'
+
 import { useSession } from 'next-auth/react'
+
+import Grid from '@mui/material/Grid2'
+
+import { Card } from '@mui/material'
+
+import TeamListTable from './TeamListTable'
+
 import FiltersSkeleton from '@/components/skeletons/FiltersSkeleton'
 import TableSkeletons from '@/components/skeletons/TableSkeletons'
-import { Card } from '@mui/material'
 
 const TeamList = () => {
   const [loading, setLoading] = useState(true)
@@ -33,6 +38,7 @@ const TeamList = () => {
       return await res.json()
     } catch (error) {
       console.error('Error fetching team data:', error)
+
       return []
     }
   }
@@ -44,6 +50,7 @@ const TeamList = () => {
     const fetchTeamData = async () => {
       setLoading(true)
       const data = await getTeamData(token)
+
       setTeamData(data)
       setLoading(false)
     }

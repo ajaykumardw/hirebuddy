@@ -122,6 +122,7 @@ const FormUserAdd = ({ statesData, designations, reportingManagers, userId, user
           if (res.status === 200) {
 
             const data = await res.json();
+            
             setFormData(data.user);
           } else {
             setFormData(null);
@@ -844,7 +845,7 @@ const FormUserAdd = ({ statesData, designations, reportingManagers, userId, user
                                             rules={{
 
                                                 // required: !formData.profile_image && 'This field is required',
-                                                
+
                                                 validate: (file) =>
                                                     !file || file.size < 800 * 1024 || 'Max file size is 800KB',
                                             }}
