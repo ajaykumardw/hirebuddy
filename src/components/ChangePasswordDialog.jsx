@@ -18,7 +18,7 @@ import { toast } from "react-toastify"
 
 import DialogCloseButton from "./dialogs/DialogCloseButton"
 
-const ChangePasswordDialog = ({ open, onClose, userId }) => {
+const ChangePasswordDialog = ({ open, onClose, userId, admin = false }) => {
   // States
   const [loading, setLoading] = useState(false)
   const [isNewPasswordShown, setIsNewPasswordShown] = useState(false)
@@ -44,50 +44,95 @@ const ChangePasswordDialog = ({ open, onClose, userId }) => {
 
     if (!token) return;
 
-    console.log("Updating password for user ID:", userId)
-
     setLoading(true)
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/branch/users/${userId}/change-password`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify(data)
-      });
 
-      const result = await res.json();
+      if (admin) {
 
-      if (res.ok) {
-
-        // Success: Show a success toast
-        toast.success('Password changed successfully!', {
-          autoClose: 10000,
-          hideProgressBar: false,
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/user/${userId}/change-password`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify(data)
         });
 
-        handleClose()
+        const result = await res.json();
 
-      } else if(res.status == 422) {
+        if (res.ok) {
 
-        // Laravel returns validation errors in the `errors` object
-        Object.entries(result.errors).forEach(([field, messages]) => {
-          setError(field, {
-            type: 'custom',
-            message: messages[0], // Use the first error message for each field
+          // Success: Show a success toast
+          toast.success('Password changed successfully!', {
+            autoClose: 10000,
+            hideProgressBar: false,
           });
-        });
+
+          handleClose()
+
+        } else if(res.status == 422) {
+
+          // Laravel returns validation errors in the `errors` object
+          Object.entries(result.errors).forEach(([field, messages]) => {
+            setError(field, {
+              type: 'custom',
+              message: messages[0], // Use the first error message for each field
+            });
+          });
+
+        } else {
+
+          // Failure: Show an error toast with the message from the API
+          toast.error(result.message || 'Something went wrong. Please try again.', {
+            autoClose: 10000,
+            hideProgressBar: false,
+          });
+
+        }
 
       } else {
 
-        // Failure: Show an error toast with the message from the API
-        toast.error(result.message || 'Something went wrong. Please try again.', {
-          autoClose: 10000,
-          hideProgressBar: false,
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/branch/users/${userId}/change-password`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify(data)
         });
 
+        const result = await res.json();
+
+        if (res.ok) {
+
+          // Success: Show a success toast
+          toast.success('Password changed successfully!', {
+            autoClose: 10000,
+            hideProgressBar: false,
+          });
+
+          handleClose()
+
+        } else if(res.status == 422) {
+
+          // Laravel returns validation errors in the `errors` object
+          Object.entries(result.errors).forEach(([field, messages]) => {
+            setError(field, {
+              type: 'custom',
+              message: messages[0], // Use the first error message for each field
+            });
+          });
+
+        } else {
+
+          // Failure: Show an error toast with the message from the API
+          toast.error(result.message || 'Something went wrong. Please try again.', {
+            autoClose: 10000,
+            hideProgressBar: false,
+          });
+
+        }
       }
     } catch (error) {
 

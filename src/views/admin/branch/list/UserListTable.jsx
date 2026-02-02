@@ -52,6 +52,7 @@ import { getLocalizedUrl } from '@/utils/i18n'
 
 // Style Imports
 import tableStyles from '@core/styles/table.module.css'
+import ChangePasswordDialog from '@/components/ChangePasswordDialog'
 
 // Styled Components
 const Icon = styled('i')({})
@@ -115,6 +116,8 @@ const UserListTable = ({ tableData }) => {
   const [data, setData] = useState(...[tableData])
   const [filteredData, setFilteredData] = useState(data)
   const [globalFilter, setGlobalFilter] = useState('')
+  const [openChangePassword, setOpenChangePassword] = useState(false);
+  const [selectedUserId, setSelectedUserId] = useState(null);
 
   // Hooks
   const { lang: locale } = useParams()
@@ -147,6 +150,12 @@ const UserListTable = ({ tableData }) => {
       setTimeout(runAfterMount, 0);
     });
   }, []);
+
+
+  const handleChangePassword = (id) => {
+    setOpenChangePassword(true);
+    setSelectedUserId(id);
+  }
 
   const columns = useMemo(
     () => [
@@ -330,6 +339,18 @@ const UserListTable = ({ tableData }) => {
                 <i className='tabler-edit text-textSecondary' />
               </Link>
             </IconButton>
+            <OptionMenu
+              iconClassName='text-textSecondary'
+              options={[
+                {
+                  text: 'Change Password',
+                  icon: 'tabler-key',
+                  menuItemProps: {
+                    onClick: () => handleChangePassword(row.original.id)
+                  },
+                },
+              ]}
+            />
             {/* <OptionMenu
               iconButtonProps={{ size: 'medium' }}
               iconClassName='text-textSecondary'
@@ -507,6 +528,7 @@ const UserListTable = ({ tableData }) => {
         userData={data}
         setData={setData}
       />
+      <ChangePasswordDialog open={openChangePassword} onClose={() => {setOpenChangePassword(false); setSelectedUserId(null); }} userId={selectedUserId} admin={true} />
     </>
   )
 }

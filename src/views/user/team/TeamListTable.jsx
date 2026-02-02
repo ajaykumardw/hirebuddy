@@ -201,7 +201,7 @@ const TeamListTable = ({userData}) => {
         header: 'Mobile No.',
         cell: ({ row }) => <Typography>{row.original?.mobile_no}</Typography>
       }),
-      
+
       // columnHelper.accessor('department', {
       //   header: 'Department',
       //   cell: ({ row }) => (
@@ -227,35 +227,16 @@ const TeamListTable = ({userData}) => {
           </Typography>
         )
       }),
-
-      // columnHelper.accessor('state', {
-      //   header: 'State',
-      //   cell: ({ row }) => (
-      //     <Typography className='capitalize' color='text.primary'>
-      //       {row.original?.state?.state_name}
-      //     </Typography>
-      //   )
-      // }),
-      // columnHelper.accessor('city', {
-      //   header: 'City',
-      //   cell: ({ row }) => (
-      //     <Typography className='capitalize' color='text.primary'>
-      //       {row.original?.city?.city_name}
-      //     </Typography>
-      //   )
-      // }),
-      // columnHelper.accessor('validUpto', {
-      //   header: 'Valid Up to',
-      //   cell: ({ row }) => (
-      //     <Typography className='capitalize' color='text.primary'>
-      //       {new Date(row.original?.expiry_date).toLocaleDateString('en-GB', {
-      //         day: '2-digit',
-      //         month: 'short',
-      //         year: 'numeric'
-      //       })}
-      //     </Typography>
-      //   )
-      // }),
+      columnHelper.accessor('report', {
+        header: 'Candidates',
+        cell: ({ row }) => (
+          <div>
+            Invited: {row.original?.report_data?.invited_candidates} <br />
+            Applied: {row.original?.report_data?.applied_candidates} <br />
+            Joined: {row.original?.report_data?.joined_candidates}
+          </div>
+        )
+      }),
       columnHelper.accessor('status', {
         header: 'Status',
         cell: ({ row }) => (

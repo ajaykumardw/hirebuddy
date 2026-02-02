@@ -51,7 +51,7 @@ const TeamList = () => {
       setLoading(true)
       const data = await getTeamData(token)
 
-      setTeamData(data)
+      setTeamData(data?.users || [])
       setLoading(false)
     }
 
